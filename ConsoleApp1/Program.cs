@@ -23,7 +23,7 @@ namespace ConsoleApp1
             //list.Add("awdawd");
 
             GlobPattern globPattern = new GlobPattern();
-            globPattern.IsMatch("house", "ho*");
+            globPattern.IsMatch("house", "hous*");
             Console.ReadKey();
         }
     }
