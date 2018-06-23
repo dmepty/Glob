@@ -12,17 +12,18 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            List<string> list = new List<string>();
-            string pattern = "admin.*.*";
+            //List<string> list = new List<string>();
+            //string pattern = "*";
 
-            list.Add("admin.panel.org");
-            list.Add("account.domain.tld");
-            list.Add("admin.google.com");
-            list.Add("admin.site.ru");
-            list.Add("info.test.com");
+            //list.Add("admin.panel.org");
+            //list.Add("account.domain.tld");
+            //list.Add("admin.google.com");
+            //list.Add("admin.site.ru");
+            //list.Add("info.test.com");
+            //list.Add("awdawd");
 
-            GlobPattern globPattern = new GlobPattern(list, pattern);
-            globPattern.FindList();
+            GlobPattern globPattern = new GlobPattern();
+            globPattern.IsMatch("house", "ho*");
             Console.ReadKey();
         }
     }

@@ -8,25 +8,61 @@ namespace Glob
 {
     public class GlobPattern
     {
+        private string _string;
         private List<string> _list;
-        private string[] _pattern;
+        private string _pattern;
 
-        public GlobPattern(List<string> list, string pattern)
-        {
-            _list = list;
-            _pattern = pattern.Split('*', '?');
-        }
+
 
         public List<string> FindList()
         {
-            List<string> findedList = null;
+            List<string> findedList = new List<string>();
 
             foreach (var str in _list)
             {
-                var a = str.StartsWith(_pattern[1]);
+
+
+                    findedList.Add(str);
+                
+
+
+
             }
 
             return findedList;
+        }
+
+        public bool IsMatch(string str, string pattern)
+        {
+            if (str == String.Empty || pattern == String.Empty)
+                return true;
+
+            var arrayStr = str.ToCharArray();
+            var arrayPat = pattern.ToCharArray();
+
+            string result = "";
+
+            for (int i = 0; i < arrayPat.Length; i++)
+            {
+                if (arrayPat[i] != '*' && arrayPat[i] != '?')
+                {
+                    if (arrayPat[i] == arrayStr[i])
+                    {
+                        result += arrayStr[i];
+                        continue;
+                    }
+                }
+                else if (arrayPat[i] == '*')
+                {
+                    if (arrayPat[i] == arrayPat.Last())
+                    {
+                        
+                    }
+                }
+
+            }
+
+            return false;
         }
     }
 }
