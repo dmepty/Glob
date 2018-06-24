@@ -19,38 +19,56 @@ namespace Glob.Tests
         };
         GlobPattern globPattern = new GlobPattern();
 
-        //[TestMethod]
-        //public void FindList_List_ItemListReturned()
-        //{
-        //    //arange
-        //    List<string> resList = new List<string>();
-        //    string pattern = "ad*";
+        [TestMethod]
+        public void FindList_List_ItemListReturned()
+        {
+            //arange
+            List<string> resList = new List<string>
+            {
+                "admin.panel.org",
+                "admin.google.com",
+                "admin.site.ru"
+            };
+            string pattern = "ad*";
 
-        //    resList.Add("admin.panel.org");
-        //    resList.Add("admin.google.com");
-        //    resList.Add("admin.site.ru");
+            List<string> resList1 = new List<string>
+            {
+                "admin.google.com",
+                "info.test.com"
+            };
+            string pattern1 = "*.com";
 
-        //    //act
-        //    GlobPattern globPattern = new GlobPattern();
-        //    var resFindList = globPattern.FindList();
+            //act
+            var resFindList = globPattern.FindList(list, pattern);
+            var resFindList1 = globPattern.FindList(list, pattern1);
 
 
-        //    //assert
-        //    Assert.IsTrue(resList.SequenceEqual(resFindList));
-        //}
+            //assert
+            Assert.IsTrue(resList.SequenceEqual(resFindList));
+            Assert.IsTrue(resList1.SequenceEqual(resFindList1));
+        }
 
         [TestMethod]
         public void IsMatch_Question_True()
         {
             //arange
-            string str = "h";
-            string pattern = "?";
+            string str = "house";
+            string pattern = "?ouse";
+            string pattern1 = "ho?se";
+            string pattern2 = "hous?";
+            string pattern3 = "ho??e";
 
             //act
             var result = globPattern.IsMatch(str, pattern);
+            var result1 = globPattern.IsMatch(str, pattern1);
+            var result2 = globPattern.IsMatch(str, pattern2);
+            var result3 = globPattern.IsMatch(str, pattern3);
 
             //assert
             Assert.IsTrue(result);
+            Assert.IsTrue(result1);
+            Assert.IsTrue(result2);
+            Assert.IsTrue(result3);
         }
 
         [TestMethod]
@@ -59,12 +77,18 @@ namespace Glob.Tests
             //arange
             string str = "house";
             string pattern = "h*us*";
+            string pattern1 = "*se";
+            string pattern2 = "h**se";
 
             //act
             var result = globPattern.IsMatch(str, pattern);
+            var result1 = globPattern.IsMatch(str, pattern1);
+            var result2 = globPattern.IsMatch(str, pattern2);
 
             //assert
             Assert.IsTrue(result);
+            Assert.IsTrue(result1);
+            Assert.IsTrue(result2);
         }
 
         [TestMethod]
@@ -79,6 +103,20 @@ namespace Glob.Tests
 
             //assert
             Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void IsMatch_NotCompare_True()
+        {
+            //arange
+            string str = "house";
+            string pattern = "hoseeeeee";
+
+            //act
+            var result = globPattern.IsMatch(str, pattern);
+
+            //assert
+            Assert.IsFalse(result);
         }
 
     }

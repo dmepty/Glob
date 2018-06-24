@@ -9,23 +9,18 @@ namespace Glob
 {
     public class GlobPattern
     {
-        //public List<string> FindList()
-        //{
-        //    List<string> findedList = new List<string>();
+        public List<string> FindList(List<string> list, string pattern)
+        {
+            List<string> findedList = new List<string>();
 
-        //    foreach (var str in _list)
-        //    {
+            foreach (var str in list)
+            {
+                if (IsMatch(str, pattern))
+                    findedList.Add(str);
+            }
 
-
-        //            findedList.Add(str);
-                
-
-
-
-        //    }
-
-        //    return findedList;
-        //}
+            return findedList;
+        }
 
         public bool IsMatch(string str, string pattern)
         {
@@ -47,62 +42,48 @@ namespace Glob
             if (String.Compare(str, pattern, true) == 0)
                 return true;
 
-            while(i != pattern.Length)
+            try
             {
-                switch (pattern[i])
+                while (i != str.Length)
                 {
-                    case '?': break;
-                    case '*':
-                        if (pattern.Length == ++i)
-                            return true;
-
-                        while(k != pattern.Length)
-                        {
-                            if (IsMatch(str.Substring(k+1), pattern.Substring(i+1)))
+                    switch (pattern[i])
+                    {
+                        case '?': break;
+                        case '*':
+                            if (pattern.Length == i + 1)
                                 return true;
 
-                            k++;
-                        }
+                            while (k != str.Length)
+                            {
+                                if (IsMatch(str.Substring(k + 1), pattern.Substring(i + 1)))
+                                    return true;
 
-                        return false;
+                                k++;
+                            }
 
-                    default:
-                        if (pattern[i] != str[k])
                             return false;
 
-                        break;
+                        default:
+                            if (pattern[i] != str[k])
+                                return false;
+
+                            break;
+                    }
+
+                    i++;
+                    k++;
                 }
 
-                i++;
-                k++;
+                if (k == str.Length)
+                {
+                    if (i == pattern.Length || pattern[i] == '*')
+                        return true;
+                }
             }
-
-            if (k == pattern.Length)
+            catch (Exception e)
             {
-                if (i == pattern.Length || pattern[i] == '*')
-                    return true;
+                return false;
             }
-
-
-                #region MyRegion
-                //if (arrayPat[i] != '*' && arrayPat[i] != '?')
-                //{
-                //    if (arrayPat[i] == arrayStr[i])
-                //    {
-                //        result += arrayStr[i];
-                //        continue;
-                //    }
-                //}
-                //else if (arrayPat[i] == '*')
-                //{
-                //    if (arrayPat[i] == arrayPat.Last() && result != null)
-                //        return str.StartsWith(result);
-                //    if (arrayPat[i] == arrayPat.Last() && result == null)
-                //        return true;
-
-
-                //}
-                #endregion
 
             return false;
         }
