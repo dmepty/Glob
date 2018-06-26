@@ -92,6 +92,63 @@ namespace Glob.Tests
         }
 
         [TestMethod]
+        public void IsMatch_StarQuestion_True()
+        {
+            //arange
+            string str = "house";
+            string pattern = "?ou*";
+            string pattern1 = "*us?";
+
+            //act
+            var result = globPattern.IsMatch(str, pattern);
+            var result1 = globPattern.IsMatch(str, pattern1);
+
+            //assert
+            Assert.IsTrue(result);
+            Assert.IsTrue(result1);
+        }
+
+        [TestMethod]
+        public void IsMatch_BracketsDash_True()
+        {
+            //arange
+            string str = "house";
+            string pattern = "[g-i]ouse";
+            string pattern1 = "ho[r-w]se";
+            string pattern2 = "hous[d-f]";
+
+            //act
+            var result = globPattern.IsMatch(str, pattern);
+            var result1 = globPattern.IsMatch(str, pattern1);
+            var result2 = globPattern.IsMatch(str, pattern2);
+
+            //assert
+            Assert.IsTrue(result);
+            Assert.IsTrue(result1);
+            Assert.IsTrue(result2);
+        }
+
+        [TestMethod]
+        public void IsMatch_Brackets_True()
+        {
+            //arange
+            string str = "house";
+            string pattern = "[Hh]ouse";
+            string pattern1 = "ho[uS]se";
+            string pattern2 = "hous[eG]";
+
+            //act
+            var result = globPattern.IsMatch(str, pattern);
+            var result1 = globPattern.IsMatch(str, pattern1);
+            var result2 = globPattern.IsMatch(str, pattern2);
+
+            //assert
+            Assert.IsTrue(result);
+            Assert.IsTrue(result1);
+            Assert.IsTrue(result2);
+        }
+
+        [TestMethod]
         public void IsMatch_Compare_True()
         {
             //arange

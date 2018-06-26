@@ -63,6 +63,30 @@ namespace Glob
 
                             return false;
 
+                        case '[':
+                            if (pattern[i + 2] == '-')
+                            {
+                                var pat = pattern.Substring(i + 1, 3).Replace("-", "");
+
+                                for (var j = pat[0]; j <= pat[1]; j++)
+                                {
+                                    if (j == str[k])
+                                        return true;
+                                }
+                            }
+                            else
+                            {
+                                var pat = pattern.Substring(i + 1, pattern.IndexOf("]") - (i + 1));
+
+                                for (var j = 0; j < pat.Length; j++)
+                                {
+                                    if (pat[j] == str[k])
+                                        return true;
+                                }
+                            }
+
+                            break;
+
                         default:
                             if (pattern[i] != str[k])
                                 return false;
