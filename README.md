@@ -1,4 +1,4 @@
-# Library for glob pattern
+# Library for WildCard
 
 Use IsMatch() method
 
